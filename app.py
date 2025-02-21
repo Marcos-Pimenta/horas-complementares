@@ -6,7 +6,7 @@ import os
 
 # Configuração do app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:nfRQguqXGhZPETgzhJYzthAMkaKEclXj@switchback.proxy.rlwy.net:44244/railway'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///database.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'sua_chave_secreta'
 
@@ -199,3 +199,12 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+from models import db
+
+with app.app_context():
+    try:
+        db.create_all()
+        print("Banco de dados conectado e tabelas criadas!")
+    except Exception as e:
+        print(f"Erro ao conectar ao banco: {e}")
