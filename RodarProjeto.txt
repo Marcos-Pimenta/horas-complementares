@@ -1,0 +1,56 @@
+Comandos Rodar Projeto
+
+python -m venv venv
+venv\Scripts\activate     # No Windows
+pip install -r requirements.txt
+python app.py
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+Criei 3 usuarios teste, como constam no BD, são eles: Marcos, Marina e Joao. Suas senhas são 1234
+---------------------------------------------------------------------------------------------------------------------------------
+                Como Funciona
+                
+Iniciando o Projeto:
+
+Execute o comando python app.py para iniciar o servidor local.
+Acesse a aplicação no navegador via http://127.0.0.1:5000.
+(Recoemndo a criação do ambiente virtual)
+
+---------------------------------------------------------------------------------------------------------------------------------
+Estrutura do Banco de Dados:
+
+As tabelas usuario e atividade armazenam informações de usuários e atividades cadastradas, com relação baseada no user_id.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Instalação de Dependências:
+
+Execute pip install -r requirements.txt para instalar todas as dependências.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Configuração do Banco de Dados:
+
+O banco de dados é criado automaticamente ao iniciar o projeto.
+Caso necessário, exclua o arquivo database.db para recriar o banco.
+
+Ferramentas para Visualização do Banco
+
+---------------------------------------------------------------------------------------------------------------------------------
+Usei o SQLite Explorer no VS Code para inspecionar as tabelas e os dados armazenados.
+
+---------------------------------------------------------------------------------------------------------------------------------
+Comandos:
+
+Criar Ambiente virtual = python -m venv venv (Já estar na pasta correta, criar em caso de não haver ambiente virtual, se precisar)
+
+Ativar Ambiente Virtual = venv\Scripts\activate (Já estar na pasta correta)
+
+Instalar Dependencias = pip install flask flask-sqlalchemy
+
+Salvar dependencias em txt = pip freeze > requirements.txt
+
+Rodar projeto = python app.py
+
+Desativar ambiente virtual = deactivate
+
+

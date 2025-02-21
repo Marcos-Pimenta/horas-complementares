@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançamento de Horas</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+        }
+
+        .tooltip-icon {
+            margin-left: 5px;
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+        #aproveitamento-info {
+            font-weight: bold;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">Horas Complementares</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegação">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if session.get('user_id') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ session.get('username', 'Usuário') }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cadastro">Cadastro</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Lançamento de Horas Complementares</h1>
+
+        <!-- Mensagens de Erro e Sucesso -->
+        {% if error_message %}
+        <div class="alert alert-danger text-center" role="alert" aria-live="assertive">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        {% if success_message %}
+        <div class="alert alert-success text-center" role="alert" aria-live="polite">
+            {{ success_message }}
+        </div>
+        {% endif %}
+
+        <!-- Formulário -->
+        <div class="card p-4 mb-4">
+            <form method="POST" action="/adicionar" id="form-atividades">
+                <div class="mb-3">
+                    <label class="form-label" for="descricao">
+                        <i class="fas fa-file-alt"></i> Descrição:
+                    </label>
+                    <input type="text" id="descricao" name="descricao" class="form-control" placeholder="Ex: Projeto de Extensão" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="categoria">
+                        <i class="fas fa-layer-group"></i> Categoria:
+                    </label>
+                    <select id="categoria" name="categoria" class="form-select" required>
+                        <option value="Extensão" selected>Extensão</option>
+                        <option value="Ensino">Ensino</option>
+                        <option value="Pesquisa">Pesquisa</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="tipo">
+                        <i class="fas fa-tag"></i> Tipo:
+                    </label>
+                    <select id="tipo" name="tipo" class="form-select" required>
+                        <option value="" disabled selected>Selecione um tipo</option>
+                        {% for tipo in tipos %}
+                        <option value="{{ tipo }}" data-aproveitamento="{{ tipo.aproveitamento }}">{{ tipo }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="horas">
+                        <i class="fas fa-clock"></i> Horas:
+                    </label>
+                    <input type="number" id="horas" name="horas" class="form-control" placeholder="Ex: 10" min="1" required>
+                    <div class="form-text" id="aproveitamento-info">Aproveitamento: 100%</div>
+                </div>                
+
+                <button type="submit" class="btn btn-primary" id="btn-adicionar">
+                    <i class="fas fa-plus-circle"></i> Adicionar
+                </button>
+                <button type="reset" class="btn btn-secondary">
+                    <i class="fas fa-eraser"></i> Limpar
+                </button>
+            </form>
+        </div>
+
+        <!-- Atividades Adicionadas -->
+        <h2>Atividades Adicionadas</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th>Horas Aproveitadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for atividade in atividades %}
+                <tr>
+                    <td>{{ atividade.descricao }}</td>
+                    <td>{{ atividade.categoria }}</td>
+                    <td>{{ atividade.tipo }}</td>
+                    <td>{{ atividade.horas_aproveitadas }} horas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botão Apagar Tudo -->
+<form method="POST" action="/apagar_tudo" onsubmit="return confirm('Tem certeza que deseja apagar todas as atividades?')">
+    <button type="submit" class="btn btn-danger mt-3">
+        <i class="fas fa-trash-alt"></i> Apagar Tudo
+    </button>
+</form>
+
+        <!-- Botão Ver Relatório -->
+        <div class="text-center mt-4">
+            <a href="/relatorio" class="btn btn-success">
+                <i class="fas fa-chart-line"></i> Ver Relatório
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
