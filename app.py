@@ -6,7 +6,7 @@ import os
 
 # Configuração do app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:nfRQguqXGhZPETgzhJYzthAMkaKEclXj@switchback.proxy.rlwy.net:44244/railway'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'sua_chave_secreta'
 
