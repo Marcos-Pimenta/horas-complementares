@@ -123,41 +123,41 @@
         <h1>Relatório de Horas Complementares</h1>
 
         <!-- Cards com Totais -->
-        <div class="card">
-            <div class="card-body">
-                <span>
-                    <i class="fas fa-user-graduate icon" aria-label="Total de horas em atividades de extensão"></i>
-                    <strong>Total de Horas de Extensão:</strong>
-                </span>
-                <span class="{% if total_extensao == 0 %}zero-value{% endif %}">
-                    {{ total_extensao }} horas
-                </span>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-body">
+        <span>
+            <i class="fas fa-user-graduate icon" aria-label="Total de horas em atividades de extensão"></i>
+            <strong>Total de Horas de Extensão:</strong>
+        </span>
+        <span class="{% if total_extensao == 0 %}zero-value{% endif %}">
+            {{ total_extensao | default(0) }} horas
+        </span>
+    </div>
+</div>
 
-        <div class="card">
-            <div class="card-body">
-                <span>
-                    <i class="fas fa-book icon" aria-label="Total de horas em atividades de ensino"></i>
-                    <strong>Total de Horas de Ensino:</strong>
-                </span>
-                <span class="{% if total_ensino == 0 %}zero-value{% endif %}">
-                    {{ total_ensino }} horas
-                </span>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-body">
+        <span>
+            <i class="fas fa-book icon" aria-label="Total de horas em atividades de ensino"></i>
+            <strong>Total de Horas de Ensino:</strong>
+        </span>
+        <span class="{% if total_ensino == 0 %}zero-value{% endif %}">
+            {{ total_ensino | default(0) }} horas
+        </span>
+    </div>
+</div>
 
-        <div class="card">
-            <div class="card-body">
-                <span>
-                    <i class="fas fa-flask icon" aria-label="Total de horas em atividades de pesquisa"></i>
-                    <strong>Total de Horas de Pesquisa:</strong>
-                </span>
-                <span class="{% if total_pesquisa == 0 %}zero-value{% endif %}">
-                    {{ total_pesquisa }} horas
-                </span>
-            </div>
-        </div>
+<div class="card">
+    <div class="card-body">
+        <span>
+            <i class="fas fa-flask icon" aria-label="Total de horas em atividades de pesquisa"></i>
+            <strong>Total de Horas de Pesquisa:</strong>
+        </span>
+        <span class="{% if total_pesquisa == 0 %}zero-value{% endif %}">
+            {{ total_pesquisa | default(0) }} horas
+        </span>
+    </div>
+</div>
 
         <!-- Tabela de Resumo por Tipo -->
         <h2 class="mt-4 text-center">Resumo por Tipo de Atividade</h2>

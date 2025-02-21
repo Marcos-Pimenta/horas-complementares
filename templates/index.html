@@ -175,11 +175,13 @@
         </table>
 
         <!-- Botão Apagar Tudo -->
-<form method="POST" action="/apagar_tudo" onsubmit="return confirm('Tem certeza que deseja apagar todas as atividades?')">
-    <button type="submit" class="btn btn-danger mt-3">
-        <i class="fas fa-trash-alt"></i> Apagar Tudo
-    </button>
-</form>
+        <form id="form-apagar" method="POST" action="{{ url_for('apagar_tudo') }}"
+        onsubmit="return confirm('Tem certeza que deseja apagar todas as atividades?')">
+      <button type="submit" class="btn btn-danger mt-3">
+          <i class="fas fa-trash-alt"></i> Apagar Tudo
+      </button>
+  </form>
+  
 
         <!-- Botão Ver Relatório -->
         <div class="text-center mt-4">

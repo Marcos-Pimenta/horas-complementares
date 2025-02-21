@@ -53,4 +53,10 @@ Rodar projeto = python app.py
 
 Desativar ambiente virtual = deactivate
 
+--------------------------------------------------------------
+mudanças nos modelos (models.py) --  aplicará mudanças no banco sem precisar recriar do zero
 
+flask db migrate -m "Atualizando tabelas"
+flask db upgrade
+
+---------------------------------------------------------------

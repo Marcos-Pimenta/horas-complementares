@@ -85,6 +85,15 @@ document.addEventListener("DOMContentLoaded", () => {
     tipoSelect.addEventListener("change", atualizarHorasAproveitadas);
     horasInput.addEventListener("input", atualizarHorasAproveitadas);
 
+    horasInput.addEventListener("input", () => {
+        if (horasInput.value < 1) {
+            horasInput.value = 1;
+        }
+        if (horasInput.value > 100) {
+            horasInput.value = 100;
+        }
+    });
+    
     // Atualização dinâmica dos totais
     async function atualizarRelatorio() {
         try {
